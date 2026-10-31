@@ -6,7 +6,7 @@
 | 2 | [Find the transpose of a sparse matrix and sum of two sparse matrices.](https://github.com/asifali411/DSL-programs/tree/main/experiment-2) |
 | 3 | [Convert infix expression to postfix (or prefix) and then evaluate using stack.](https://github.com/asifali411/DSL-programs/tree/main/experiment-3) |
 | 4 | [Implement Queue, DEQUEUE, and Circular Queue using arrays.](https://github.com/asifali411/DSL-programs/tree/main/experiment-4) |
-| 5 | Implement backward and forward navigation of visited web pages in a web browser (i.e. back and forward buttons) using doubly linked list operations. |
+| 5 | [Implement backward and forward navigation of visited web pages in a web browser (i.e. back and forward buttons) using doubly linked list operations.](https://github.com/asifali411/DSL-programs/tree/main/experiment-5) |
 | 6 | Implement addition and multiplication of polynomials using singly linked lists. |
 | 7 | Create a binary tree for a given simple arithmetic expression and find the prefix / postfix equivalent. |
 | 8 | Implement a dictionary of word-meaning pairs using binary search trees. |
