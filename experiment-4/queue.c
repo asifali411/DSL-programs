@@ -69,7 +69,7 @@ int main() {
   printf("1. Enqueue\n");
   printf("2. Dequeue\n");
   printf("3. Peek\n");
-  printf("4. Diplay\n");
+  printf("4. Display\n");
   printf("5. Exit\n");
 
   int is_running = 1;
