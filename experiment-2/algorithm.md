@@ -1,7 +1,7 @@
 # SPARSE MATRIX ADDITION AND TRANSPOSE
 
 ## AIM
-    To perform addition and transpose of two sparse matrices.
+    To perform addition and transpose of sparse matrices.
 
 ## ALGORITHM
 
@@ -25,7 +25,7 @@
 ### ADDITION
 
 1. Start.
-2. Read the two sparce matrices.
+2. Read the two sparse matrices.
 3. Check whether the dimensions of both matrices are equal.
     - If the dimensions are not equal, display an error message and stop the addition.
 4. Initialize three index variables:

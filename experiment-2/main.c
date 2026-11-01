@@ -8,7 +8,7 @@ typedef struct {
   int val;
 } Field;
 
-void read_sparce(Field matrix[MAX]) {
+void read_sparse(Field matrix[MAX]) {
 
   int row, col, val;
 
@@ -32,17 +32,17 @@ void read_sparce(Field matrix[MAX]) {
   }
 }
 
-void display_sparce(Field matrix[MAX]) {
+void display_sparse(Field matrix[MAX]) {
   for (int i = 0; i <= matrix[0].val; i++) {
     printf("%d %d %d\n", matrix[i].row, matrix[i].col, matrix[i].val);
   }
 }
 
-void add(Field firstMatrix[], Field secondMatrix[], Field sumMatrix[]) {
+int add(Field firstMatrix[], Field secondMatrix[], Field sumMatrix[]) {
   if ((firstMatrix[0].row != secondMatrix[0].row) ||
       (firstMatrix[0].col != secondMatrix[0].col)) {
-    printf("Dimension of both sparce matrix must be same for addition.");
-    return;
+    printf("Dimensions of both sparse matrices must be same for addition.\n");
+    return 0;
   }
 
   int i = 1;
@@ -59,7 +59,7 @@ void add(Field firstMatrix[], Field secondMatrix[], Field sumMatrix[]) {
       sumMatrix[k] = (Field){
           .row = firstMatrix[i].row,
           .col = firstMatrix[i].col,
-          .val = firstMatrix[i].val + secondMatrix[i].val,
+          .val = firstMatrix[i].val + secondMatrix[j].val,
       };
 
       k++;
@@ -68,7 +68,7 @@ void add(Field firstMatrix[], Field secondMatrix[], Field sumMatrix[]) {
     }
 
     // case 2: row same, col different
-    if (firstMatrix[i].row == secondMatrix[j].row &&
+    else if (firstMatrix[i].row == secondMatrix[j].row &&
         firstMatrix[i].col != secondMatrix[j].col) {
       // first col < second col
       if (firstMatrix[i].col < secondMatrix[j].col) {
@@ -88,7 +88,7 @@ void add(Field firstMatrix[], Field secondMatrix[], Field sumMatrix[]) {
     }
 
     // case 3: row different
-    if (firstMatrix[i].row != secondMatrix[j].row) {
+    else if (firstMatrix[i].row != secondMatrix[j].row) {
       // first row < second row
       if (firstMatrix[i].row < secondMatrix[j].row) {
         sumMatrix[k] = firstMatrix[i];
@@ -120,6 +120,8 @@ void add(Field firstMatrix[], Field secondMatrix[], Field sumMatrix[]) {
   }
 
   sumMatrix[0].val = k - 1;
+
+  return 1;
 }
 
 void transpose(Field matrix[MAX], Field transpose[MAX]) {
@@ -154,24 +156,25 @@ int main() {
   Field firstMatrix[MAX], secondMatrix[MAX], sumMatrix[MAX],
       transposeMatrix[MAX];
 
-  printf("Enter the first sparce matrix\n");
-  read_sparce(firstMatrix);
+  printf("Enter the first sparse matrix\n");
+  read_sparse(firstMatrix);
 
-  printf("Enter the second sparce matrix\n");
-  read_sparce(secondMatrix);
+  printf("Enter the second sparse matrix\n");
+  read_sparse(secondMatrix);
 
   printf("\nA:\n");
-  display_sparce(firstMatrix);
+  display_sparse(firstMatrix);
   printf("\nB:\n");
-  display_sparce(secondMatrix);
+  display_sparse(secondMatrix);
 
-  add(firstMatrix, secondMatrix, sumMatrix);
-  printf("\nSum:\n");
-  display_sparce(sumMatrix);
+  if (add(firstMatrix, secondMatrix, sumMatrix)) {
+    printf("\nSum:\n");
+    display_sparse(sumMatrix);
+  }
 
   transpose(firstMatrix, transposeMatrix);
   printf("\nTranspose of A:\n");
-  display_sparce(transposeMatrix);
+  display_sparse(transposeMatrix);
 
   return 0;
 }
