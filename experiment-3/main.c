@@ -55,10 +55,18 @@ void to_postfix(char infix[], char postfix[]) {
         k++;
       }
 
+      if (top < 0) {
+        printf("Unbalanced parentheses\n");
+        exit(1);
+      }
+
       pop();
     } else if (is_operator(ch)) {
       while(top >= 0 && peek() != '(') {
-        if (precedence(peek()) > precedence(ch)) {
+        int top_prec = precedence(peek());
+        int op_prec = precedence(ch);
+
+        if (top_prec > op_prec) {
           postfix[k] = pop();
           k++;
         } else break;
@@ -74,6 +82,11 @@ void to_postfix(char infix[], char postfix[]) {
   while(top >= 0) {
     char ch = pop();
 
+    if (ch == '(') {
+      printf("Unbalanced parentheses\n");
+      exit(1);
+    }
+
     postfix[k] = ch;
     k++;
   }
@@ -81,11 +94,21 @@ void to_postfix(char infix[], char postfix[]) {
   postfix[k] = '\0';
 }
 
+void reverse(char str[]) {
+  int len = strlen(str);
+
+  for (int i = 0; i < len / 2; i++) {
+    char temp = str[i];
+    str[i] = str[len - 1 - i];
+    str[len - 1 - i] = temp;
+  }
+}
+
 void to_prefix(char infix[], char prefix[]) {
   
   char rev[MAX];
   strcpy(rev, infix);
-  strrev(rev);
+  reverse(rev);
 
   for(int i = 0; rev[i] != '\0'; i++) {
     if (rev[i] == '(') {
@@ -96,7 +119,7 @@ void to_prefix(char infix[], char prefix[]) {
   }
 
   to_postfix(rev, prefix);
-  strrev(prefix);
+  reverse(prefix);
 }
 
 int main() {
