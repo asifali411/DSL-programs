@@ -1,7 +1,7 @@
 # POLYNOMIAL ADDITION AND MULTIPLICATION USING SINGLY LINKED LIST
 
 ## AIM
-    To add and multiply two polynomials using singly liked list.
+    To add and multiply two polynomials using a singly linkedlist.
 
 ## ALGORITHM
 

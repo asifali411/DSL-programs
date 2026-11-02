@@ -18,7 +18,7 @@
 4. Visit Page
     - Read url from user
     - Create a new node.
-    - Free all the node after the current node (forward history).
+    - Free all the nodes after the current node (forward history).
     - Set current->next = newNode.
     - Set newNode->prev = current.
     - Update current = newNode.
