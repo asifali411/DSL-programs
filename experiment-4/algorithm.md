@@ -1,7 +1,7 @@
-# QUEUE, CIRCULAR QUEUE AND DEQUEUE
+# QUEUE, CIRCULAR QUEUE AND DEQUE
 
 ## AIM
-To implement Queue, Circular Queue and Dequeue (Double-Ended Queue) using arrays.
+To implement Queue, Circular Queue and Deque (Double-Ended Queue) using arrays.
 
 ## ALGORITHM
 
@@ -120,7 +120,7 @@ To implement Queue, Circular Queue and Dequeue (Double-Ended Queue) using arrays
 
 ---
 
-### DEQUEUE (DOUBLE-ENDED QUEUE)
+### DEQUE (DOUBLE-ENDED QUEUE)
 
 #### INSERT AT FRONT
 ```
