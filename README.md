@@ -12,7 +12,7 @@
 | 8 | [Implement a dictionary of word-meaning pairs using binary search trees.](https://github.com/asifali411/DSL-programs/tree/main/experiment-8) |
 | 9 | [Find the shortest distance of every cell from a landmine inside a maze.](https://github.com/asifali411/DSL-programs/tree/main/experiment-9) |
 | 10 | [We have three containers whose sizes are 10 litres, 7 litres, and 4 litres, respectively. The 7-litre and 4-litre containers start out full of water, but the 10-litre container is initially empty. We are allowed one type of operation: pouring the contents of one container into another, stopping only when the source container is empty or the destination container is full. We want to know if there is a sequence of pourings that leaves exactly 2 litres in the 7-litre or 4-litre container](https://github.com/asifali411/DSL-programs/tree/main/experiment-10) |
-| 11 | Implement the find and replace feature in a text editor. |
+| 11 | [Implement the find and replace feature in a text editor.](https://github.com/asifali411/DSL-programs/tree/main/experiment-11) |
 | 12 | Given an array of sorted items, implement an efficient algorithm to search for specific item in the array. |
 | 13 | Implement Bubble sort, Insertion Sort, Radix sort, Quick Sort, and Merge Sort and compare the number of steps involved. |
 | 14 | The General post office wishes to give preferential treatment to its customers. They have identified the customer categories as Defence personnel, Differently abled, Senior citizen, Ordinary. The customers are to be given preference in the decreasing order - Differently abled, Senior citizen, Defence personnel, Normal person. Generate the possible sequence of completion.|
