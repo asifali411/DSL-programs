@@ -51,7 +51,7 @@ void search_word(Node *root, char word[]) {
   }
 
   int cmp = strcmp(word, root->word);
-  
+
   if (cmp < 0) {
     search_word(root->left, word);
   } else if (cmp > 0) {
@@ -62,7 +62,8 @@ void search_word(Node *root, char word[]) {
 }
 
 void display_words(Node *root) {
-  if (root == NULL) return;
+  if (root == NULL)
+    return;
 
   display_words(root->left);
   printf("%s: %s\n", root->word, root->meaning);
@@ -70,7 +71,8 @@ void display_words(Node *root) {
 }
 
 void free_tree(Node *root) {
-  if (root == NULL) return;
+  if (root == NULL)
+    return;
 
   free_tree(root->left);
   free_tree(root->right);
@@ -93,36 +95,36 @@ int main() {
     scanf("%d", &choice);
 
     switch (choice) {
-      case 1:
-        printf("Enter the word: ");
-        scanf(" %[^\n]", word);
-        
-        printf("Enter the meaning: ");
-        scanf(" %[^\n]", meaning);
+    case 1:
+      printf("Enter the word: ");
+      scanf(" %[^\n]", word);
 
-        tree_root = insert_word(tree_root, word, meaning);
-        break;
-    
-      case 2:
-        printf("Enter the word: ");
-        scanf("%s", word);
+      printf("Enter the meaning: ");
+      scanf(" %[^\n]", meaning);
 
-        search_word(tree_root, word);
-        break;
-      
-      case 3:
-        display_words(tree_root);
-        break;
-      
-      case 4:
-        is_running = 0;
-        break;
+      tree_root = insert_word(tree_root, word, meaning);
+      break;
 
-      default:
-        printf("Invalid choice\n");
+    case 2:
+      printf("Enter the word: ");
+      scanf("%s", word);
+
+      search_word(tree_root, word);
+      break;
+
+    case 3:
+      display_words(tree_root);
+      break;
+
+    case 4:
+      is_running = 0;
+      break;
+
+    default:
+      printf("Invalid choice\n");
     }
 
-  } while(is_running);
+  } while (is_running);
 
   free_tree(tree_root);
   return 0;

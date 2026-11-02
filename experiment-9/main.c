@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #define MAX 100
-#define INF 999
+#define INF 9999
 
 #define VISITED 1
 #define NOT_VISITED 0
@@ -21,13 +21,11 @@ Cell queue[MAX * MAX];
 int front = -1, rear = -1;
 
 int neighbour_idx[2][4] = {
-  {0,  0, 1, -1},
-  {1, -1, 0,  0},
+    {0, 0, 1, -1},
+    {1, -1, 0, 0},
 };
 
-int is_empty() {
-  return front == -1 || front > rear;
-}
+int is_empty() { return front == -1 || front > rear; }
 
 void enqueue(int x, int y) {
   if (rear == (MAX * MAX) - 1)
@@ -49,7 +47,8 @@ Cell dequeue() {
   Cell val = queue[front];
   front++;
 
-  if (front > rear) front = rear = -1;
+  if (front > rear)
+    front = rear = -1;
 
   return val;
 }
@@ -84,20 +83,23 @@ void display_dist() {
 }
 
 int is_valid_cell(int i, int j) {
-  if (i < 0 || j < 0) return 0;
-  if (i >= rows || j >= cols) return 0;
+  if (i < 0 || j < 0)
+    return 0;
+  if (i >= rows || j >= cols)
+    return 0;
   return 1;
 }
 
 void bfs() {
-  while(!is_empty()) {
+  while (!is_empty()) {
     Cell current = dequeue();
 
-    for(int i = 0;i < 4; i++) {
+    for (int i = 0; i < 4; i++) {
       int newX = current.x + neighbour_idx[0][i];
       int newY = current.y + neighbour_idx[1][i];
-      
-      if (is_valid_cell(newX, newY) && !visited[newX][newY] && maze[newX][newY] <= 0) {
+
+      if (is_valid_cell(newX, newY) && !visited[newX][newY] &&
+          maze[newX][newY] <= 0) {
         enqueue(newX, newY);
 
         visited[newX][newY] = VISITED;
@@ -109,8 +111,8 @@ void bfs() {
 
 int main() {
 
-  for(int i = 0; i < MAX; i++){
-    for(int j = 0; j < MAX; j++) {
+  for (int i = 0; i < MAX; i++) {
+    for (int j = 0; j < MAX; j++) {
       visited[i][j] = NOT_VISITED;
     }
   }
