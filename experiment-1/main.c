@@ -7,8 +7,6 @@ typedef struct {
   int exp;
 } Term;
 
-// ---------------------------------------------------------------------------------
-
 void display_poly(Term p[MAX], int size) {
   for (int i = 0; i < size; i++) {
     printf("%dx^%d", p[i].coeff, p[i].exp);
@@ -62,8 +60,6 @@ int add(
 
   return k;
 }
-
-// ---------------------------------------------------------------------------------
 
 int main() {
 
