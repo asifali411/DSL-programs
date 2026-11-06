@@ -32,3 +32,24 @@
 | Quick Sort     |   O(n log n)   |   O(n log n)   |      O(n²)     |     O(log n)     |
 | Heap Sort      |   O(n log n)   |   O(n log n)   |   O(n log n)   |       O(1)       |
 | Radix Sort     | O(d · (n + k)) | O(d · (n + k)) | O(d · (n + k)) |     O(n + k)     |
+
+## Time Complexity of Searching Algorithms
+
+| Algorithm            |  Best Case  | Average Case |  Worst Case  | Space Complexity |
+| :------------------- | :---------: | :----------: | :----------: | :--------------: |
+| Linear Search        |     O(1)    |     O(n)     |     O(n)     |       O(1)       |
+| Binary Search        |     O(1)    |   O(log n)   |   O(log n)   |  O(1) iterative  |
+| Hash Table Lookup    |     O(1)    |     O(1)     |     O(n)     |       O(n)       |
+| BST Search           |     O(1)    |   O(log n)   |     O(n)     |       O(h)       |
+| BFS / DFS (graphs)   |     O(1)    |    O(v+e)    |    O(v+e)    |   O(v) / O(h)    |
+
+## Notation Used in Complexity Tables
+
+| Symbol | Name | Meaning | Example | Used In |
+| :----: | :--- | :------ | :------ | :------ |
+| n | Input size | Number of elements, keys or nodes | Array of 100 items gives n = 100 | All sorting and searching algorithms |
+| k | Range / radix | Number of possible values per digit (buckets) | Decimal digits 0-9 gives k = 10 | Radix Sort |
+| d | Digit count | Number of digits in the largest number | Largest value 4567 gives d = 4 | Radix Sort |
+| v | Vertices | Number of nodes in a graph | 5×5 maze gives V = 25 | BFS, DFS |
+| e | Edges | Number of connections between vertices | Each valid move between adjacent cells is one edge | BFS, DFS |
+| h | Height | Longest path from root to a leaf in a tree | Balanced tree: h ≈ log n. Skewed tree: h = n | BST search, recursive DFS space |
