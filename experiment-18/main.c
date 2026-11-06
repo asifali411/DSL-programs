@@ -1,121 +1,121 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-#define MAX 10
+#define MAX 100
 
-int heaps[MAX][MAX];
-int sizes[MAX];
-int number_of_lists = 0;
+typedef struct Node {
+  int data;
+  struct Node *next;
+} Node;
 
-void swap(int list_idx, int i, int j) {
-  int temp = heaps[list_idx][i];
-  heaps[list_idx][i] = heaps[list_idx][j];
-  heaps[list_idx][j] = temp;
+Node *lists[MAX];
+Node *heap[MAX];
+int heap_size = 0;
+
+void swap(int i, int j) {
+  Node *temp = heap[i];
+  heap[i] = heap[j];
+  heap[j] = temp;
 }
 
-void add_to_heap(int list_idx, int elem) {
-  int size = sizes[list_idx];
-  heaps[list_idx][size] = elem;
+void append(Node **head, Node **tail, int data) {
+  Node *node = malloc(sizeof(Node));
+  node->data = data;
+  node->next = NULL;
 
-  int current_idx = size;
-  int parent_idx;
+  if (*head == NULL) *head = node;
+  else (*tail)->next = node;
+  *tail = node;
+}
 
-  while (current_idx > 0) {
-    parent_idx = (current_idx - 1) / 2;
-
-    if (heaps[list_idx][parent_idx] > heaps[list_idx][current_idx]) {
-      swap(list_idx, current_idx, parent_idx);
-    } else
-      break;
-
-    current_idx = parent_idx;
+void heapify_up(int idx) {
+  while (idx > 0) {
+    int parent = (idx - 1) / 2;
+    if (heap[idx]->data >= heap[parent]->data) break;
+    swap(idx, parent);
+    idx = parent;
   }
-
-  sizes[list_idx]++;
 }
 
-int remove_min(int list_idx) {
-  int min = heaps[list_idx][0];
-
-  sizes[list_idx]--;
-
-  heaps[list_idx][0] = heaps[list_idx][sizes[list_idx]];
-
-  int current_idx = 0;
-
+void heapify_down(int idx) {
   while (1) {
-    int left = 2 * current_idx + 1;
-    int right = 2 * current_idx + 2;
-    int smallest = current_idx;
+    int left = 2 * idx + 1, right = left + 1, smallest = idx;
 
-    if (left < sizes[list_idx] &&
-        heaps[list_idx][left] < heaps[list_idx][smallest]) {
-      smallest = left;
-    }
+    if (left < heap_size && heap[left]->data < heap[smallest]->data) smallest = left;
+    if (right < heap_size && heap[right]->data < heap[smallest]->data) smallest = right;
+    if (smallest == idx) break;
 
-    if (right < sizes[list_idx] &&
-        heaps[list_idx][right] < heaps[list_idx][smallest]) {
-      smallest = right;
-    }
-
-    if (smallest == current_idx)
-      break;
-
-    swap(list_idx, current_idx, smallest);
-    current_idx = smallest;
+    swap(idx, smallest);
+    idx = smallest;
   }
-
-  return min;
 }
 
-void merge(int merged[]) {
-  int k = 0;
-
-  while (1) {
-    int min = 999999;
-    int min_idx = -1;
-
-    for (int i = 0; i < number_of_lists; i++) {
-      if (sizes[i] > 0 && heaps[i][0] < min) {
-        min = heaps[i][0];
-        min_idx = i;
-      }
-    }
-
-    if (min_idx == -1)
-      break;
-
-    merged[k++] = remove_min(min_idx);
+void construct_min_heap(int no_of_lists) {
+  for (int i = 0; i < no_of_lists; i++) {
+    if (lists[i] == NULL) continue;
+    heap[heap_size] = lists[i];
+    heapify_up(heap_size++);
   }
+}
 
-  printf("\nMerged list: ");
-  for (int i = 0; i < k; i++) {
-    printf("%d ", merged[i]);
+Node *merge(void) {
+  Node *result = NULL, *tail = NULL;
+
+  while (heap_size > 0) {
+    Node *top = heap[0];
+    append(&result, &tail, top->data);
+
+    heap[0] = top->next;
+    if (heap[0] == NULL) heap[0] = heap[--heap_size];
+    heapify_down(0);
   }
+  return result;
+}
+
+void display_list(Node *head) {
+  for (; head != NULL; head = head->next) printf("%d ", head->data);
   printf("\n");
 }
 
-int main() {
-  int elem, size;
-
-  int merged[MAX];
-
-  for (int i = 0; i < MAX; i++) {
-    sizes[i] = 0;
+void free_list(Node *head) {
+  while (head != NULL) {
+    Node *temp = head;
+    head = head->next;
+    free(temp);
   }
+}
+
+int main(void) {
+  int no_of_lists;
 
   printf("Enter the number of lists: ");
-  scanf("%d", &number_of_lists);
+  scanf("%d", &no_of_lists);
 
-  for (int i = 0; i < number_of_lists; i++) {
+  for (int i = 0; i < no_of_lists; i++) {
+    int no_of_elements, num;
+    Node *tail = NULL;
+
     printf("Enter the number of elements in list %d: ", i + 1);
-    scanf("%d", &size);
+    scanf("%d", &no_of_elements);
 
     printf("Enter the elements: ");
-    for (int j = 0; j < size; j++) {
-      scanf("%d", &elem);
-      add_to_heap(i, elem);
+    for (int j = 0; j < no_of_elements; j++) {
+      scanf("%d", &num);
+      append(&lists[i], &tail, num);
     }
   }
 
-  merge(merged);
+  construct_min_heap(no_of_lists);
+  Node *result = merge();
+
+  for (int i = 0; i < no_of_lists; i++) {
+    display_list(lists[i]);
+    free_list(lists[i]);
+  }
+
+  printf("Result: ");
+  display_list(result);
+  free_list(result);
+
+  return 0;
 }
