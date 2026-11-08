@@ -10,18 +10,20 @@ typedef struct Block {
   int start_address;
   int size;
   int is_free;
+  struct Block *prev;
   struct Block *next;
 } Block;
 
 Block *head = NULL;
 
 Block *create_block(int start_address, int size, int is_free) {
-  Block *block = (Block *)malloc(sizeof(Block));
+  Block *block = malloc(sizeof(Block));
 
   block->start_address = start_address;
   block->size = size;
   block->is_free = is_free;
   block->next = NULL;
+  block->prev = NULL;
 
   return block;
 }
@@ -50,11 +52,14 @@ int add_block(int start_address, int size, int is_free) {
   }
 
   current->next = block;
+  block->prev = current;
+
   return next_address;
 }
 
 void display_memory_blocks() {
   Block *current = head;
+
   while(current != NULL) {
     printf("(START: %4d, SIZE: %4d, %s)\n", 
       current->start_address,
@@ -66,16 +71,40 @@ void display_memory_blocks() {
   }
 }
 
-void garbage_collect() {
-  if (head == NULL || head->next == NULL) return;
+void delete_block(Block *block) {
+  if (block == NULL)
+    return;
 
-  Block *current = head, *next_block;
-  while(current->next != NULL) {
-    next_block = current->next;
-    if (current->is_free && next_block->is_free) {
+  Block *next_block = block->next;
+  Block *prev_block = block->prev;
+
+  if (prev_block != NULL) {
+    prev_block->next = next_block;
+  } else {
+    head = next_block;
+  }
+
+  if (next_block != NULL) {
+    next_block->prev = prev_block;
+  }
+
+  free(block);
+}
+
+void garbage_collect() {
+  if (head == NULL) return;
+
+  Block *current = head;
+
+  while(current != NULL && current->next != NULL) {
+
+    if (current->is_free && current->next->is_free) {
+
+      Block *next_block = current->next;
+
       current->size += next_block->size;
-      current->next = next_block->next;
-      free(next_block);
+
+      delete_block(next_block);
     } else {
       current = current->next;
     }
@@ -104,6 +133,7 @@ void compact() {
         tail = new_block;
       } else {
         tail->next = new_block;
+        new_block->prev = tail;
         tail = new_block;
       }
     }
@@ -113,15 +143,16 @@ void compact() {
   if (total_free_space > 0) {
     Block *free_block = create_block(current_start_address, total_free_space, FREE);
 
-    if (tail == NULL) {
+    if (new_head == NULL) {
       new_head = free_block;
     } else {
       tail->next = free_block;
+      free_block->prev = tail;
     }
   }
 
   free_memory_blocks();
-  
+
   head = new_head;
 }
 
@@ -136,19 +167,20 @@ int main() {
   next_address = add_block(next_address, 300, FREE);
   next_address = add_block(next_address, 100, FREE);
 
-  printf("Before garbage collection and compaction: \n");
+  printf("Before garbage collection and compaction:\n");
   display_memory_blocks();
   
   garbage_collect();
 
-  printf("\nAfter garbage collection: \n");
+  printf("\nAfter garbage collection:\n");
   display_memory_blocks();
 
   compact();
 
-  printf("\nAfter compacting: \n");
+  printf("\nAfter compacting:\n");
   display_memory_blocks();
 
   free_memory_blocks();
+
   return 0;
 }
